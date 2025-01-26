@@ -5,6 +5,7 @@ import { formatTime, screenShot } from '../utils'
 import renderVolumeBar from './VolumeBar'
 import renderProgress from './Progress'
 import { isFullscreen, isWebFullscreen } from '../listeners/fullscreen'
+import { isSupport as isSupportDocPip, togglePictureInPicture } from '../functions/doc-pip'
 
 import type { UIInterface } from '../types'
 
@@ -221,6 +222,9 @@ const render = (it: UIInterface, $el: HTMLDivElement) => {
         }
         break
       case pipLabel:
+        if (isSupportDocPip()) {
+          return togglePictureInPicture(player)
+        }
         return player.togglePip()
       case fullscreenLabel:
         if (isWebFullscreen(player) || !player.isFullscreenEnabled) {
